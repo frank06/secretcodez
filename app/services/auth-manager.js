@@ -2,18 +2,22 @@ import Ember from 'ember';
 
 export default Ember.Service.extend({
 
-  authToken: null,
+  accessToken: null,
 
   authenticate(login, password) {
-    return Ember.$.getJSON('/token', { login: login, password: password }).then((result) => {
-      this.set('authToken', result.auth_token);
+    return Ember.$.ajax({
+      method: "POST",
+      url: "/token",
+      data: { username: login, password: password }
+    }).then((result) => {
+      this.set('accessToken', result.access_token);
     });
   },
 
   invalidate() {
-    this.set('authToken', null);
+    this.set('accessToken', null);
   },
 
-  isAuthenticated: Ember.computed.bool('authToken')
+  isAuthenticated: Ember.computed.bool('accessToken')
 
 });

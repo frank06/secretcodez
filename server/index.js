@@ -1,4 +1,8 @@
+const bodyParser = require('body-parser');
+
 module.exports = function(app) {
+
+  app.use(bodyParser.urlencoded({ extended: true }));
 
   app.get('/api/codes', function (req, res) {
     
@@ -14,12 +18,12 @@ module.exports = function(app) {
     });
   });
   
-  app.get('/token', function(req, res) {
+  app.post('/token', function(req, res) {
 
-    if (req.query.login == 'login' && req.query.password == 'ok') {
-      res.send({ auth_token: "some bs" });
+    if (req.body.username == 'login' && req.body.password == 'ok') {
+      res.send({ access_token: "some bs" });
     } else {
-      res.status(401).send('Unauthorized');
+      res.status(400).send({ error: "invalid_grant" });
     }
 
   });

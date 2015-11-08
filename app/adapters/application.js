@@ -6,9 +6,9 @@ export default DS.RESTAdapter.extend({
   
   authManager: Ember.inject.service(),
 
-  headers: Ember.computed('authManager.authToken', function() {
+  headers: Ember.computed('authManager.accessToken', function() {
     return {
-      "Authorization": `Bearer ${this.get("authManager.authToken")}`
+      "Authorization": `Bearer ${this.get("authManager.accessToken")}`
     };
   })
   
