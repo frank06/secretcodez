@@ -1,4 +1,4 @@
-var bodyParser = require('body-parser');
+const bodyParser = require('body-parser');
 
 module.exports = function(app) {
   
@@ -19,8 +19,7 @@ module.exports = function(app) {
   });
   
   app.post('/token', function(req, res) {
-    
-    if (req.body.username === 'login' && req.body.password === 'ok') {
+    if (req.body.username == 'login' && req.body.password == 'ok') {
       res.send({ access_token: "some bs" });
     } else {
       res.status(400).send({ error: "invalid_grant" });
