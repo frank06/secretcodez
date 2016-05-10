@@ -1,15 +1,15 @@
+import DS from 'ember-data';
 import ESASession from "ember-simple-auth/services/session";
 
 export default ESASession.extend({
   
   store: Ember.inject.service(),
   
-  setCurrentUser: function() {
+  currentUser: Ember.computed('isAuthenticated', function() {
     if (this.get('isAuthenticated')) {
-      this.get('store').queryRecord('user', {}).then((user) => {
-        this.set('currentUser', user);
-      });
+      const promise = this.get('store').queryRecord('user', {})
+      return DS.PromiseObject.create({ promise: promise })
     }
-  }.observes('isAuthenticated')
+  })
   
 });
